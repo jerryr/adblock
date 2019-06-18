@@ -8,7 +8,10 @@
 piholeIP="192.168.1.1"
 
 outlist='./final_blocklist.txt'
-tempoutlist="$outlist.tmp"
+# Set up temporary files
+tempoutlist=$(mktemp)
+sortedlist=$(mktemp)
+trap "rm -f -- $tempoutlist $sortedlist" 0 2 3 15
 
 echo "Getting yoyo ad list..." # Approximately 2452 domains at the time of writing
 curl -s -d mimetype=plaintext -d hostformat=unixhosts http://pgl.yoyo.org/adservers/serverlist.php? | sort > $tempoutlist
@@ -33,10 +36,10 @@ curl  'https://codeberg.org/spootle/blocklist/raw/branch/master/blocklist.txt' |
 # Sort the aggregated results and remove any duplicates
 # Remove entries from the whitelist file if it exists at the root of the current user's home folder
 echo "Removing duplicates and formatting the list of domains..."
-sed $'s/\r$//' $tempoutlist | grep "^\w" | sort -u | sed '/^$/d' > sorted_list.txt
+sed $'s/\r$//' $tempoutlist | grep "^\w" | sort -u | sed '/^$/d' > $sortedlist
 
 echo "Applying whitelist"
-comm -23 sorted_list.txt whitelist.txt | awk -v "IP=$piholeIP" '{sub(/\r$/,""); print IP" "$0}' > $outlist
+comm -23 $sortedlist whitelist.txt | awk -v "IP=$piholeIP" '{sub(/\r$/,""); print IP" "$0}' > $outlist
 
 # Count how many domains/whitelists were added so it can be displayed to the user
 numberOfAdsBlocked=$(cat $outlist | wc -l | sed 's/^[ \t]*//')
