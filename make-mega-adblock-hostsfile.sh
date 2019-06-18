@@ -27,6 +27,9 @@ curl -s http://someonewhocares.org/hosts/hosts | grep -v "#" | sed '/^$/d' | sed
 echo "Getting Mother of All Ad Blocks list..." # 102168 domains!! Thanks Kacy
 curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:30.0) Gecko/20100101 Firefox/30.0' -e http://forum.xda-developers.com/ http://adblock.mahakala.is/ | grep -v "#" | awk '{print $2}' | sort >> $tempoutlist
 
+echo "Getting spootle's list..."
+curl  'https://codeberg.org/spootle/blocklist/raw/branch/master/blocklist.txt' | sort >> $tempoutlist
+
 # Sort the aggregated results and remove any duplicates
 # Remove entries from the whitelist file if it exists at the root of the current user's home folder
 echo "Removing duplicates and formatting the list of domains..."
