@@ -1,2 +1,4 @@
-000001.ink
-foo.com
+a-graph.facebook.com
+b-graph.facebook.com
+graph.facebook.com
+www.facebook.com
