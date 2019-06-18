@@ -33,7 +33,10 @@ curl  'https://codeberg.org/spootle/blocklist/raw/branch/master/blocklist.txt' |
 # Sort the aggregated results and remove any duplicates
 # Remove entries from the whitelist file if it exists at the root of the current user's home folder
 echo "Removing duplicates and formatting the list of domains..."
-	cat $tempoutlist | sed $'s/\r$//' | sort | uniq | sed '/^$/d' | awk -v "IP=$piholeIP" '{sub(/\r$/,""); print IP" "$0}' > $outlist
+sed $'s/\r$//' $tempoutlist | sort -u | sed '/^$/d' > sorted_list.txt
+
+echo "Applying whitelist"
+comm -23 sorted_list.txt whitelist.txt | awk -v "IP=$piholeIP" '{sub(/\r$/,""); print IP" "$0}' > $outlist
 
 # Count how many domains/whitelists were added so it can be displayed to the user
 numberOfAdsBlocked=$(cat $outlist | wc -l | sed 's/^[ \t]*//')
