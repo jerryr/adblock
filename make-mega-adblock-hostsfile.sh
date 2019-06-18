@@ -33,7 +33,7 @@ curl  'https://codeberg.org/spootle/blocklist/raw/branch/master/blocklist.txt' |
 # Sort the aggregated results and remove any duplicates
 # Remove entries from the whitelist file if it exists at the root of the current user's home folder
 echo "Removing duplicates and formatting the list of domains..."
-sed $'s/\r$//' $tempoutlist | sort -u | sed '/^$/d' > sorted_list.txt
+sed $'s/\r$//' $tempoutlist | grep "^\w" | sort -u | sed '/^$/d' > sorted_list.txt
 
 echo "Applying whitelist"
 comm -23 sorted_list.txt whitelist.txt | awk -v "IP=$piholeIP" '{sub(/\r$/,""); print IP" "$0}' > $outlist
