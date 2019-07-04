@@ -8,3 +8,4 @@ mqtt.c10r.facebook.com
 portal.fb.com
 star.c10r.facebook.com
 www.facebook.com
+star-mini.c10r.facebook.com
