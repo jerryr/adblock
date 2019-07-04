@@ -6,6 +6,7 @@
 # The Pi-hole now blocks over 120,000 ad domains
 # Address to send ads to (the RPi)
 piholeIP="192.168.1.200"
+piholeIP6="fc02::1"
 
 outlist='./final_blocklist.txt'
 # Set up temporary files
@@ -39,7 +40,7 @@ echo "Removing duplicates and formatting the list of domains..."
 sed $'s/\r$//' $tempoutlist | grep "^\w" | sort -u | sed '/^$/d' | sed 's/#.*//' > $sortedlist
 
 echo "Applying whitelist"
-comm -23 $sortedlist whitelist.txt | awk -v "IP=$piholeIP" '{sub(/\r$/,""); print IP" "$0}' > $outlist
+comm -23 $sortedlist whitelist.txt | awk -v "IP=$piholeIP" -v "IP6=$piholeIP6" '{sub(/\r$/,""); print IP" "$0"\n"IP6" "$0}' > $outlist
 
 # Count how many domains/whitelists were added so it can be displayed to the user
 numberOfAdsBlocked=$(cat $outlist | wc -l | sed 's/^[ \t]*//')
