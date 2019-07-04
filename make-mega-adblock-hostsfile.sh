@@ -5,7 +5,7 @@
 
 # The Pi-hole now blocks over 120,000 ad domains
 # Address to send ads to (the RPi)
-piholeIP="192.168.1.1"
+piholeIP="192.168.1.200"
 
 outlist='./final_blocklist.txt'
 # Set up temporary files
