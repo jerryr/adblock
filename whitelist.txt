@@ -3,9 +3,8 @@ api.facebook.com
 b-graph.facebook.com
 edge-mqtt.facebook.com
 graph.facebook.com
-graph.facebook.com
 mqtt.c10r.facebook.com
 portal.fb.com
-star-mini.c10r.facebook.com
 star.c10r.facebook.com
+star-mini.c10r.facebook.com
 www.facebook.com
