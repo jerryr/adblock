@@ -8,3 +8,4 @@ portal.fb.com
 star.c10r.facebook.com
 star-mini.c10r.facebook.com
 www.facebook.com
+www.techrepublic.com
