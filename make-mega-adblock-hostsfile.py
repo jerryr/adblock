@@ -71,7 +71,10 @@ print("Removed %d items whitelisted" %(c2-c3))
 
 with open(outfile, "w") as o:
     for hostname in content:
-        o.write("%s %s\n" %(ipv4_address, hostname))
-        if ipv6_address:
-            o.write("%s %s\n" %(ipv6_address, hostname))
+        try:
+            o.write("%s %s\n" %(ipv4_address, hostname))
+            if ipv6_address:
+                o.write("%s %s\n" %(ipv6_address, hostname))
+        except UnicodeEncodeError:
+            print("skipped one record due to improper encoding")
 print("Blacklisted %d domains total" %(c3))
