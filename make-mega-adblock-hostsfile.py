@@ -48,8 +48,15 @@ content = []
 for listname, url in lists.items():
     print ("getting list " + listname)
     response = requests.get(url)
-    # TODO: check for error in retrieving list
-    lines = list(filter(lambda x: re.search("^#", x) == None, response.text.split("\n")))
+    if response.status_code != 200:
+        print("Failed to get list from server")
+        continue
+    lines = []
+    for line in response.iter_lines():
+        line = line.strip()
+        if line.startswith(b"#") == False:
+            lines.append(str(line, 'utf-8'))
+
     #print("%d remaining after filtering out comments" %(len(lines)))
     for line in lines:
         words = line.split()
