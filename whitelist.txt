@@ -16,3 +16,4 @@ worldometers.info
 .*\.aliexpress.com
 www.facebook.com
 www.worldometers.info
+res\.cloudinary\.com
